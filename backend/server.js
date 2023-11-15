@@ -9,7 +9,10 @@ import orderRouter from './routes/orderRoutes.js';
 import uploadRouter from './routes/uploadRoutes.js';
 import categoryRouter from './routes/categoryRouter.js';
 
-dotenv.config();
+// Initialize environment variables using dotenv
+dotenv.config({ path: './.env' });
+
+console.log("MongoDB URI:", process.env.MONGODB_URI);
 
 mongoose
   .connect(process.env.MONGODB_URI)
@@ -38,17 +41,14 @@ app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/categories', categoryRouter);
-app.use('/images', express.static(path.join(__dirname, '../frontend/public/images')));
 
-app.use(express.static(path.join(__dirname, '/frontend/build')));
+// Serve images
+app.use('/images', express.static(path.join(path.resolve(), '../frontend/public/images')));
+
+// Serve frontend static files
+app.use(express.static(path.join(path.resolve(), '/frontend/build')));
 app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
-);
-
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "/frontend/build")));
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "/frontend/build/index.html"))
+  res.sendFile(path.join(path.resolve(), '/frontend/build/index.html'))
 );
 
 app.use((err, req, res, next) => {

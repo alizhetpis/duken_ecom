@@ -1,11 +1,11 @@
 {
   "dependencies": {
+    "mongoose": "^7.6.3",
     "mongoose-slug-generator": "^1.0.4"
   },
   "name": "duken",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
     "start": "node backend/server.js",
